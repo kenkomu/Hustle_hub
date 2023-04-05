@@ -1,109 +1,85 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
+import { useEffect, useState } from "react";
 import tw from "tailwind-styled-components";
-import Link from "next/link";
+import { carList } from "../data/carList";
 
-const Search = () => {
-  const [pickuplocation, setPickuplocation] = useState("");
-  const [dropofflocation, setDropofflocation] = useState("");
+const RideSelector = (props) => {
+  const [rideDuration, setRideDuration] = useState(0);
+
+  useEffect(() => {
+    const pickupCoord = props.pickupCoordinate;
+    const dropoffCoord = props.dropoffCoordinate;
+
+    if (pickupCoord && dropoffCoord) {
+      rideDurationf(props);
+    }
+  }, [props]);
+
+  const rideDurationf = (props) => {
+    fetch(
+      `https://api.mapbox.com/directions/v5/mapbox/driving/${props.pickupCoordinate[0]},${props.pickupCoordinate[1]};${props.dropoffCoordinate[0]},${props.dropoffCoordinate[1]}?` +
+        new URLSearchParams({
+          access_token: "pk.eyJ1Ijoia2VubmV0aDIxNiIsImEiOiJjbGcyaTY4ODIwNW9zM3BvM2JqcXBvN2Y5In0.UdSVjvyREG_MNu0LR6LAyg",
+        })
+    )
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.routes[0]) {
+          setRideDuration(data.routes[0].duration / 100);
+        }
+      });
+  };
 
   return (
     <Wrapper>
-      <Link href="/" passHref>
-        <ButtonContainer>
-          <BackButton src="https://img.icons8.com/ios-filled/50/000000/left.png" />
-        </ButtonContainer>
-      </Link>
-      <InputContainer>
-        <FromToIcons>
-          <CircleIcon src="https://img.icons8.com/ios-filled/50/9CA3AF/filled-circle.png" />
-          <Line src="https://img.icons8.com/ios/50/9CA3AF/vertical-line.png" />
-          <SquareIcon src="https://img.icons8.com/windows/50/000000/square-full.png" />
-        </FromToIcons>
-        <InputBoxes>
-          <Input
-            placeholder="Enter pickup location"
-            onChange={(event) => setPickuplocation(event.target.value)}
-          />
-          <Input
-            placeholder="Where to?"
-            onChange={(event) => setDropofflocation(event.target.value)}
-          />
-        </InputBoxes>
-        <PlusIcon src="https://img.icons8.com/ios/50/000000/plus-math.png" />
-      </InputContainer>
-      <SavedPlaces className="text-red-600">
-        <StarIcon src="https://img.icons8.com/ios-filled/50/ffffff/star--v1.png" />
-        Saved Places (Not available)
-      </SavedPlaces>
-      <Link
-        href={{
-          pathname: "/confirm",
-          query: {
-            pickuplocation: pickuplocation,
-            dropofflocation: dropofflocation,
-          },
-        }}
-        passHref
-      >
-        <ConfirmButtonContainer>Confirm Locations</ConfirmButtonContainer>
-      </Link>
+      <Title>Choose appropriate, or swipe up for more</Title>
+      <CarList>
+        {carList.map((car) => (
+          <Car key="car">
+            <CarImage src={car.imgUrl} />
+            <CarDetails>
+              <Service>{car.service}</Service>
+              <Time>5 min away</Time>
+            </CarDetails>
+            <CarPrice>
+              {"$" + (rideDuration * car.multiplier).toFixed(2)}
+            </CarPrice>
+          </Car>
+        ))}
+      </CarList>
     </Wrapper>
   );
 };
 
-export default Search;
-
 const Wrapper = tw.div`
- bg-gray-200 h-screen
+ flex-1  overflow-y-scroll flex flex-col flex flex-col
 `;
 
-const ButtonContainer = tw.div`
-bg-white px-4
+const Title = tw.div`
+text-center text-s text-gray-500 border-b py-2
 `;
-const InputContainer = tw.div`
-bg-white flex items-center px-4 mb-2
+const CarList = tw.div`
+border-b overflow-y-scroll 
 `;
-
-const FromToIcons = tw.div`
-flex flex-col w-10 mr-2 items-center
-`;
-
-const BackButton = tw.img`
-h-12 cursor-pointer
+const Car = tw.div`
+flex items-center 
 `;
 
-const CircleIcon = tw.img`
-h-2.5
+const CarImage = tw.img`
+h-20 px-4
 `;
 
-const Line = tw.img`
-h-10
+const CarDetails = tw.div`
+flex-1 px-8
+`;
+const Service = tw.div`
+font-semibold`;
+const Time = tw.div`
+text-blue-500 text-xs
 `;
 
-const SquareIcon = tw.img`
-h-3
+const CarPrice = tw.div`
+px-4 text-sm
 `;
 
-const InputBoxes = tw.div`
-flex flex-col flex-1
-`;
-
-const Input = tw.input`
-h-10 bg-gray-200 my-2 rounded-2 p-2 outline-none border-none
-`;
-
-const PlusIcon = tw.img`
-h-10 w-10 bg-gray-200 rounded-full ml-3
-`;
-
-const StarIcon = tw.img`
-rounded-full bg-gray-400 p-2 mr-2 h-10 w-10 
-`;
-
-const SavedPlaces = tw.div`
-bg-white flex text-l  items-center px-4 py-2
-`;
-
-const ConfirmButtonContainer = tw.div`
-bg-black flex text-xl  items-center py-2 text-white mt-4 justify-center text-center m-12 transform hover:scale-105 transition cursor-pointer
-`;
+export default RideSelector;

@@ -19,7 +19,7 @@ const RideSelector = (props) => {
     fetch(
       `https://api.mapbox.com/directions/v5/mapbox/driving/${props.pickupCoordinate[0]},${props.pickupCoordinate[1]};${props.dropoffCoordinate[0]},${props.dropoffCoordinate[1]}?` +
         new URLSearchParams({
-          access_token: "YOUR_ACCESS_TOKEN",
+          access_token: "pk.eyJ1Ijoia2VubmV0aDIxNiIsImEiOiJjbGcyaTY4ODIwNW9zM3BvM2JqcXBvN2Y5In0.UdSVjvyREG_MNu0LR6LAyg",
         })
     )
       .then((response) => response.json())
@@ -32,7 +32,7 @@ const RideSelector = (props) => {
 
   return (
     <Wrapper>
-      <Title>Choose a ride, or swipe up for more</Title>
+      <Title>Choose appropriate, or swipe up for more</Title>
       <CarList>
         {carList.map((car) => (
           <Car key="car">

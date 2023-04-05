@@ -8,30 +8,22 @@ export default function Home() {
       <Map />
       <ActionItems>
         <Header>
-          <UberLogo src="https://i.ibb.co/84stgjq/uber-technologies-new-20218114.jpg" />
+          <UberLogo src="logo.png"/>
         </Header>
         <ActionButtons>
           <Link href="/search" passHref>
             <ActionButton>
               <ActionButtonImage src="https://i.ibb.co/cyvcpfF/uberx.png" />
-              Ride
+              Work
             </ActionButton>
           </Link>
-          <ActionButton className="text-red-600">
-            <ActionButtonImage src="https://i.ibb.co/n776JLm/bike.png" />
-            Wheels (Not Available)
-          </ActionButton>
-          <ActionButton className="text-red-600">
-            <ActionButtonImage src="https://i.ibb.co/5RjchBg/uberschedule.png" />
-            Reserve (Not Available)
-          </ActionButton>
-        </ActionButtons>
+          </ActionButtons>
         <Link href="/search" passHref>
-          <InputButton>Where to ?</InputButton>
+          <InputButton>Book Now</InputButton>
         </Link>
       </ActionItems>
     </Wrapper>
-  );
+  )
 }
 
 const Wrapper = tw.div`
