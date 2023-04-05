@@ -9,6 +9,7 @@ export default function Home() {
       <ActionItems>
         <Header>
           <UberLogo src="logo.png"/>
+          
         </Header>
         <ActionButtons>
           <Link href="/search" passHref>

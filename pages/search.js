@@ -2,6 +2,8 @@ import React from "react";
 import { useEffect, useState } from "react";
 import tw from "tailwind-styled-components";
 import { carList } from "../data/carList";
+import Link from "next/link";
+import BackButton from "./components/buttoncontainer";
 
 
 const RideSelector = (props) => {
@@ -19,9 +21,9 @@ const RideSelector = (props) => {
   const rideDurationf = (props) => {
     fetch(
       `https://api.mapbox.com/directions/v5/mapbox/driving/${props.pickupCoordinate[0]},${props.pickupCoordinate[1]};${props.dropoffCoordinate[0]},${props.dropoffCoordinate[1]}?` +
-        new URLSearchParams({
-          access_token: "pk.eyJ1Ijoia2VubmV0aDIxNiIsImEiOiJjbGcyaTY4ODIwNW9zM3BvM2JqcXBvN2Y5In0.UdSVjvyREG_MNu0LR6LAyg",
-        })
+      new URLSearchParams({
+        access_token: "pk.eyJ1Ijoia2VubmV0aDIxNiIsImEiOiJjbGcyaTY4ODIwNW9zM3BvM2JqcXBvN2Y5In0.UdSVjvyREG_MNu0LR6LAyg",
+      })
     )
       .then((response) => response.json())
       .then((data) => {
@@ -36,26 +38,37 @@ const RideSelector = (props) => {
 
 
   return (
-    <div className="bg-gray-50 rounded-lg shadow-lg p-10 max-w-[500px] h-[300px]">
-      <Title>Choose appropriate, or swipe up for more</Title>
-      <CarList>
-        {carList.map((car) => (
-          <Car key="car">
-            <CarImage src={car.imgUrl}width={100} height={50} className="rounded-full"/>
-            <CarDetails>
-            <Service onClick={fetchPeopleList}>{car.service}</Service>
-            <Time>5 min away</Time>
-            </CarDetails>
-            <CarPrice>
-              {"$" + (rideDuration * car.multiplier).toFixed(2)}
-            </CarPrice>
-          </Car>
-        ))}
-      </CarList>
-    </div>
+    <>
+      <Link href="/" passHref>
+        <ButtonContainer>
+          <BackButton src="https://img.icons8.com/ios-filled/50/000000/left.png" />
+        </ButtonContainer>
+      </Link>
+
+      <div className="bg-gray-50 rounded-lg shadow-lg p-10 max-w-[500px] h-[300px]">
+        <Title>Choose appropriate, or swipe up for more</Title>
+        <CarList>
+          {carList.map((car) => (
+            <Car key="car">
+              <CarImage src={car.imgUrl} width={100} height={50} className="rounded-full" />
+              <CarDetails>
+                <Service onClick={fetchPeopleList}>{car.service}</Service>
+                <Time>5 min away</Time>
+              </CarDetails>
+              <CarPrice>
+                {"$" + (rideDuration * car.multiplier).toFixed(2)}
+              </CarPrice>
+            </Car>
+          ))}
+        </CarList>
+      </div>
+    </>
   );
 };
 
+const ButtonContainer = tw.div`
+bg-white px-4
+`;
 const Wrapper = tw.div`
  flex-1  overflow-y-scroll flex flex-col flex flex-col
 `;
