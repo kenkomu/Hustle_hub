@@ -39,7 +39,7 @@ const RideSelector = (props) => {
             <CarImage src={car.imgUrl} />
             <CarDetails>
               <Service>{car.service}</Service>
-              <Time>5 min away</Time>
+              <Time>19 min away</Time>
             </CarDetails>
             <CarPrice>
               {"$" + (rideDuration * car.multiplier).toFixed(2)}
