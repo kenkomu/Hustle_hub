@@ -3,7 +3,7 @@ import tw from "tailwind-styled-components";
 import Map from "./components/Map";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import RideSelector from "./components/RideSelector";
+import Serviceor from "./components/Serviceor";
 
 const Confirm = () => {
   const router = useRouter();
@@ -61,7 +61,7 @@ const Confirm = () => {
         dropoffCoordinate={dropoffCoordinate}
       />
       <RideContainer>
-        <RideSelector
+        <Searchor
           pickupCoordinate={pickupCoordinate}
           dropoffCoordinate={dropoffCoordinate}
         />

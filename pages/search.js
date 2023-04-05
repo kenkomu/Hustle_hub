@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import tw from "tailwind-styled-components";
 import { carList } from "../data/carList";
 
+
 const RideSelector = (props) => {
   const [rideDuration, setRideDuration] = useState(0);
 
@@ -29,17 +30,21 @@ const RideSelector = (props) => {
         }
       });
   };
+  const fetchPeopleList = () => {
+    window.location.href = "https://example.com/people-list";
+  };
+
 
   return (
-    <Wrapper>
+    <div className="bg-gray-50 rounded-lg shadow-lg p-10 max-w-[500px] h-[300px]">
       <Title>Choose appropriate, or swipe up for more</Title>
       <CarList>
         {carList.map((car) => (
           <Car key="car">
-            <CarImage src={car.imgUrl} />
+            <CarImage src={car.imgUrl}width={100} height={50} className="rounded-full"/>
             <CarDetails>
-              <Service>{car.service}</Service>
-              <Time>5 min away</Time>
+            <Service onClick={fetchPeopleList}>{car.service}</Service>
+            <Time>5 min away</Time>
             </CarDetails>
             <CarPrice>
               {"$" + (rideDuration * car.multiplier).toFixed(2)}
@@ -47,7 +52,7 @@ const RideSelector = (props) => {
           </Car>
         ))}
       </CarList>
-    </Wrapper>
+    </div>
   );
 };
 
@@ -59,10 +64,10 @@ const Title = tw.div`
 text-center text-s text-gray-500 border-b py-2
 `;
 const CarList = tw.div`
-border-b overflow-y-scroll 
+bg-gray-50 rounded-lg shadow-lg p-10 max-w-[500px] h-[300px]
 `;
 const Car = tw.div`
-flex items-center 
+flex items-center p-5
 `;
 
 const CarImage = tw.img`

@@ -1,27 +1,27 @@
 export const carList = [
   {
-    imgUrl: 'https://i.ibb.co/cyvcpfF/uberx.png',
-    service: 'UberX',
+    imgUrl: 'img2.jpg',
+    service: 'Plumber',
     multiplier: 1,
   },
   {
-    imgUrl: 'https://i.ibb.co/YDYMKny/uberxl.png',
-    service: 'UberXL',
+    imgUrl: 'img3.jpg',
+    service: 'Electrician',
     multiplier: 1.5,
   },
   {
-    imgUrl: 'https://i.ibb.co/Xx4G91m/uberblack.png',
-    service: 'Black',
+    imgUrl: 'img4.jpg',
+    service: 'Chef',
     multiplier: 2,
   },
   {
-    imgUrl: 'https://i.ibb.co/cyvcpfF/uberx.png',
-    service: 'Comfort',
+    imgUrl: 'img5.jpg',
+    service: 'Builder',
     multiplier: 1.2,
   },
   {
-    imgUrl: ' https://i.ibb.co/1nStPWT/uberblacksuv.png',
-    service: 'Black SUV',
+    imgUrl: 'img6.jpg',
+    service: 'Cleaner',
     multiplier: 2.8,
   }
 ]
